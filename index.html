@@ -1,119 +1,116 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Erlen</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      :root {
-        --bg: #f4f4f4
-        --card: #ffffff
+<head>
+  <meta charset="UTF-8">
+  <title>Erlen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --card: #ffffff;
+      --text: #222;
+      --muted: #666;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .card {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+    }
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .popup-content {
+      background: #111;
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .scrolling-text {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .scrolling-text p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 10s linear infinite;
+      margin: 0;
+    }
+    @keyframes scrollText {
+      from {
+        transform: translateX(0);
       }
-      body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: var(--bg);
-        color: var(--text);
+      to {
+        transform: translateX(-100%);
       }
-      header {
-        padding: 2rem;
-        text-align: center;
-      }
-      main {
-        max-width: 1000px;
-        margin: auto;
-        padding: 1rem;
-      }
-      .erer, .card {
-        background: var(--card);
-        padding: 1rem;
-        border-radius: 12px;
-      }
-      footer {
-        text-align: center;
-        padding: 2rem;
-        color: var(--muted);
-      }
-      .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-      }
-      .popup-content {
-        background: #111;
-        color: white;
-        padding: 30px;
-        border-radius: 15px;
-        width: 80%;
-        max-width: 500px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-      }
-      .scrolling-text {
-        white-space: nowrap;
-        overflow: hidden;
-        box-sizing: border-box;
-      }
-      .scrolling-text p {
-        display: inline-block;
-        padding-left: 100%;
-        animation: scrollText 10s linear infinite;
-      }
-      @keyframes scrollText {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-100%);
-        }
-      }
-    </style>
-
-  </head>
-  <!-- POPUP D'ACCUEIL -->
-
-  
-</script>
-  <body>
-    <div id="welcomePopup" class="popup-overlay">
-      <div class="popup-content">
-        <span class="close-btn" onclick="closePopup()">×</span>
-        <div class="scrolling-text">
-          <p>
-            ⭕️ Bienvenue sur erlen ⌾ radio gratuite ⌾ site en développement.
-          </p>,
-        </div>
+    }
+  </style>
+</head>
+<body>
+  <div id="welcomePopup" class="popup-overlay">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup()">✖</button>
+      <div class="scrolling-text">
+        <p>⭕️ Bienvenue sur Erlen ⌾ Radios gratuites ⌾ Site en développement⭕️</p>
       </div>
     </div>
-    <header>
-      <h1>Erlen</h1>
-    </header>
-    <main>
-      <section class="erer">
-        <h1>Bienvenue sur Erlen !</h1>
-        <p>Ce site est actuellement en développement. Merci d'attendre que le site soit fini.</p>
-      </section>
-    </main>
-    <footer>© 2026 Erlen</footer>
-    <script>
-      function closePopup() {
-        document.getElementById("welcomePopup").style.display = "none";
-      }
-    </script>
-  </body>
+  </div>
+  <header>
+    <h1>Erlen</h1>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Bienvenue sur Erlen !</h2>
+      <p>Ce site est actuellement en développement. Merci de patienter.</p>
+    </section>
+  </main>
+  <footer>© 2026 Erlen</footer>
+  <script>
+    function closePopup() {
+      document.getElementById("welcomePopup").style.display = "none";
+    }
+  </script>
+</body>
 </html>

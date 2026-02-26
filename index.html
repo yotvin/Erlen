@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       :root {
-        --bg: #fff
+        --bg: #ffffff
+        --card: #f4f4f4
       }
       body {
         margin: 0;
@@ -17,6 +18,11 @@
       header {
         padding: 2rem;
         text-align: center;
+      }
+      main {
+        max-width: 1000px;
+        margin: auto;
+        padding: 1rem;
       }
       .erer, .card {
         background: var(--card);
@@ -97,10 +103,12 @@
     <header>
       <h1>Erlen</h1>
     </header>
-    <section class="erer">
-      <h1>Bienvenue sur Erlen !</h1>
-      <p>Ce site est actuellement en développement. Merci d'attendre que le site soit fini.</p>
-    </section>
+    <main>
+      <section class="erer">
+        <h1>Bienvenue sur Erlen !</h1>
+        <p>Ce site est actuellement en développement. Merci d'attendre que le site soit fini.</p>
+      </section>
+    </main>
     <footer>© 2026 Erlen</footer>
     <script>
       function closePopup() {

@@ -18,6 +18,16 @@
         padding: 2rem;
         text-align: center;
       }
+      .erer, .card {
+        background: var(--card);
+        padding: 1rem;
+        border-radius: 12px;
+      }
+      footer {
+        text-align: center;
+        padding: 2rem;
+        color: var(--muted);
+      }
       .popup-overlay {
         position: fixed;
         top: 0;
@@ -70,26 +80,32 @@
 
   </head>
   <!-- POPUP D'ACCUEIL -->
-<div id="welcomePopup" class="popup-overlay">
-  <div class="popup-content">
-    <span class="close-btn" onclick="closePopup()">×</span>
-    <div class="scrolling-text">
-      <p>
-        ⭕️ Bienvenue sur erlen ⌾ radio gratuite ⌾ site en développement.
-      </p>,
-    </div>
-  </div>
-</div>
-  <script>
-function closePopup() {
-  document.getElementById("welcomePopup").style.display = "none";
-}
+
+  
 </script>
   <body>
+    <div id="welcomePopup" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">×</span>
+        <div class="scrolling-text">
+          <p>
+            ⭕️ Bienvenue sur erlen ⌾ radio gratuite ⌾ site en développement.
+          </p>,
+        </div>
+      </div>
+    </div>
     <header>
       <h1>Erlen</h1>
     </header>
-    <h1>Bienvenue sur Erlen !</h1>
-    <p>Ce site est actuellement en développement. Merci d'attendre que le site soit fini.</p>
+    <section class="erer">
+      <h1>Bienvenue sur Erlen !</h1>
+      <p>Ce site est actuellement en développement. Merci d'attendre que le site soit fini.</p>
+    </section>
+    <footer>© 2026 Erlen</footer>
+    <script>
+      function closePopup() {
+        document.getElementById("welcomePopup").style.display = "none";
+      }
+    </script>
   </body>
 </html>

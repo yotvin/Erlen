@@ -18,65 +18,56 @@
         padding: 2rem;
         text-align: center;
       }
+      .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .popup-content {
+        background: #111;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .scrolling-text {
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .scrolling-text p {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scrollText 10s linear infinite;
+      }
+      @keyframes scrollText {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
     </style>
-    /* Fond sombre */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
 
-/* Boîte popup */
-.popup-content {
-  background: #111;
-  color: white;
-  padding: 30px;
-  border-radius: 15px;
-  width: 80%;
-  max-width: 500px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Bouton fermer */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* Zone texte défilant */
-.scrolling-text {
-  white-space: nowrap;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.scrolling-text p {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scrollText 10s linear infinite;
-}
-
-/* Animation */
-@keyframes scrollText {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
   </head>
   <!-- POPUP D'ACCUEIL -->
 <div id="welcomePopup" class="popup-overlay">

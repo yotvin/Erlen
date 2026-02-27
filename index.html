@@ -26,6 +26,26 @@
       margin: auto;
       padding: 1rem;
     }
+    .pub {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 160px;
+      height: 500px;
+      background: #ddd;
+      border: 3px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .pub-gauche {
+      left: 20px;
+    }
+    .pub-droite {
+      right: 20px;
+    }
     .card {
       background: var(--card);
       padding: 1rem;
@@ -101,6 +121,12 @@
     <h1>Erlen</h1>
   </header>
   <main>
+    <div class="pub pub-gauche">
+      PUB
+    </div>
+    <div class="pub pub-droite">
+      PUB
+    </div>
     <section class="card">
       <h2>Bienvenue sur Erlen !</h2>
       <p>Ce site est actuellement en développement. Merci de patienter.</p>

@@ -1,84 +1,129 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Connexion | Erlen</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-firestore-compat.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyAjCWXm9IrNgRb40CEThEQn3uDfV14h3d8",
-        authDomain: "erlen-ytv.firebaseapp.com",
-        projectId: "erlen-ytv",
-        storageBucket: "erlen-ytv.firebasestorage.app",
-        messagingSenderId: "188574671375",
-        appId: "1:188574671375:web:6c518dd4ce23f082c1b97a",
-        measurementId: "G-X58R6QLBBM"
-      };
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const auth = firebase.auth();
-    </script>
-  </head>
-  <body>
-    <h1>Se connecter</h1>
-    <button id="googleLogin">Se connecter avec Google</button>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Mot de passe">
-    <button id="loginBtn">Se connecter</button>
-    <button id="signupBtn">S’inscrire</button>
-    <script>
-      const auth = firebase.auth();
-      const db = firebase.firestore();
-      document.getElementById("signupBtn").addEventListener("click", () => {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        auth.createUserWithEmailAndPassword(email, password)
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion | Erlen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Firebase v10 compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 🔑 Config Firebase
+    const firebaseConfig = {
+      apiKey: "TA_API_KEY",
+      authDomain: "TON_PROJET.firebaseapp.com",
+      projectId: "TON_PROJET",
+      storageBucket: "TON_PROJET.appspot.com",
+      messagingSenderId: "TON_ID",
+      appId: "TON_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 400px; margin: auto; }
+    input, button { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Se connecter</h1>
+
+  <!-- Google login -->
+  <button id="googleLogin">Se connecter avec Google</button>
+
+  <hr>
+
+  <!-- Email/Mot de passe -->
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Mot de passe">
+  <button id="loginBtn">Se connecter</button>
+  <button id="signupBtn">S’inscrire</button>
+
+  <script>
+    // --- Email/Mot de passe ---
+    document.getElementById("signupBtn").addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
         .then(userCredential => {
-            const user = userCredential.user;
-            alert("Compte créé !");
-            db.collection("users").doc(user.uid).set({
-              email: user.email,
-              role: "user"
+          const user = userCredential.user;
+          alert("Compte créé !");
+          // Stocker utilisateur dans Firestore avec rôle
+          db.collection("users").doc(user.uid).set({
+            email: user.email,
+            role: "user",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        })
+        .catch(error => alert(error.message));
+    });
+
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          db.collection("users").doc(user.uid).get()
+            .then(doc => {
+              if (doc.exists && doc.data().role === "admin") {
+                window.location.href = "admin.html";
+              } else {
+                window.location.href = "dashboard.html";
+              }
             });
         })
         .catch(error => alert(error.message));
     });
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      auth.signInWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        alert("Connecté !");
-        db.collection("users").doc(user.uid).get()
-        .then(doc => {
-          if (doc.exists && doc.data().role === "admin") {
-            window.location.href = "admin.html";
-          } else {
-            window.location.href = "dashboard.html";
-          }
-        });
-    })
-    .catch(error => alert(error.message));
-});
-      const provider = new firebase.auth.GoogleAuthProvider();
-      document.getElementById("googleLogin").addEventListener("click", () => {
-        auth.signInWithPopup(provider)
-          .then(result => {
-            const user = result.user;
-            console.log("Connecté avec :", user.displayName, user.email);
-            window.location.href = "dashboard.html";
-          })
-          .catch(error => {
-            console.error(error);
-            alert("Erreur lors de la connexion Google : " + error.message);
+
+    // --- Google login ---
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    document.getElementById("googleLogin").addEventListener("click", () => {
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          // Ajouter l'utilisateur dans Firestore s'il n'existe pas
+          db.collection("users").doc(user.uid).get().then(doc => {
+            if (!doc.exists) {
+              db.collection("users").doc(user.uid).set({
+                name: user.displayName,
+                email: user.email,
+                role: "user",
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            }
+          }).then(() => {
+            // Vérifier rôle pour redirection
+            db.collection("users").doc(user.uid).get().then(doc => {
+              if (doc.exists && doc.data().role === "admin") {
+                window.location.href = "admin.html";
+              } else {
+                window.location.href = "dashboard.html";
+              }
+            });
           });
-      });
-    </script>
-  </body>
+        })
+        .catch(error => {
+          console.error(error);
+          alert("Erreur lors de la connexion Google : " + error.message);
+        });
+    });
+
+    // --- Vérification utilisateur connecté (pages protégées) ---
+    auth.onAuthStateChanged(user => {
+      // Exemple : si page nécessite connexion
+      // if (!user) window.location.href = "login.html";
+    });
+  </script>
+</body>
 </html>

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Connexion | Erlen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 400px; margin: auto; }
     input, button { display: block; width: 100%; margin: 10px 0; padding: 10px; }
@@ -14,24 +13,21 @@
 <body>
   <h1>Se connecter</h1>
 
-  <!-- Google login -->
   <button id="googleLogin">Se connecter avec Google</button>
-
   <hr>
-
-  <!-- Email/Mot de passe -->
   <input type="email" id="email" placeholder="Email">
   <input type="password" id="password" placeholder="Mot de passe">
   <button id="loginBtn">Se connecter</button>
   <button id="signupBtn">S’inscrire</button>
 
-  <!-- Firebase v10 compat -->
+  <!-- 🔹 Scripts Firebase v10 compat -->
   <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-firestore-compat.js"></script>
 
+  <!-- 🔹 Script principal -->
   <script>
-    // 🔑 Configuration Firebase
+    // Configuration Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyAjCWXm9IrNgRb40CEThEQn3uDfV14h3d8",
       authDomain: "erlen-ytv.firebaseapp.com",
@@ -89,8 +85,6 @@
       auth.signInWithPopup(provider)
         .then(result => {
           const user = result.user;
-
-          // Ajouter l'utilisateur dans Firestore s'il n'existe pas
           db.collection("users").doc(user.uid).get().then(doc => {
             if (!doc.exists) {
               return db.collection("users").doc(user.uid).set({
@@ -101,7 +95,6 @@
               });
             }
           }).then(() => {
-            // Redirection selon rôle
             db.collection("users").doc(user.uid).get().then(doc => {
               if (doc.exists && doc.data().role === "admin") {
                 window.location.href = "admin.html";
@@ -112,12 +105,6 @@
           });
         })
         .catch(error => alert("Erreur Google : " + error.message));
-    });
-
-    // --- Vérification utilisateur connecté ---
-    auth.onAuthStateChanged(user => {
-      // Exemple : rediriger si non connecté
-      // if (!user) window.location.href = "login.html";
     });
   </script>
 </body>

@@ -11,7 +11,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // 🔑 Config Firebase
+    // 🔑 Configuration Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyAjCWXm9IrNgRb40CEThEQn3uDfV14h3d8",
       authDomain: "erlen-ytv.firebaseapp.com",
@@ -21,7 +21,10 @@
       appId: "1:188574671375:web:6c518dd4ce23f082c1b97a"
     };
 
+    // Initialise Firebase
     firebase.initializeApp(firebaseConfig);
+
+    // Définir auth et db
     const auth = firebase.auth();
     const db = firebase.firestore();
   </script>
@@ -56,7 +59,6 @@
         .then(userCredential => {
           const user = userCredential.user;
           alert("Compte créé !");
-          // Stocker utilisateur dans Firestore avec rôle
           db.collection("users").doc(user.uid).set({
             email: user.email,
             role: "user",
@@ -92,6 +94,7 @@
       auth.signInWithPopup(provider)
         .then(result => {
           const user = result.user;
+
           // Ajouter l'utilisateur dans Firestore s'il n'existe pas
           db.collection("users").doc(user.uid).get().then(doc => {
             if (!doc.exists) {
@@ -103,7 +106,7 @@
               });
             }
           }).then(() => {
-            // Vérifier rôle pour redirection
+            // Redirection selon rôle
             db.collection("users").doc(user.uid).get().then(doc => {
               if (doc.exists && doc.data().role === "admin") {
                 window.location.href = "admin.html";
@@ -113,15 +116,13 @@
             });
           });
         })
-        .catch(error => {
-          console.error(error);
-          alert("Erreur lors de la connexion Google : " + error.message);
-        });
+        .catch(error => alert("Erreur Google : " + error.message));
     });
 
     // --- Vérification utilisateur connecté (pages protégées) ---
     auth.onAuthStateChanged(user => {
-      // Exemple : si page nécessite connexion
+      // Si nécessaire, redirige vers login si pas connecté
+      // Exemple pour dashboard/admin :
       // if (!user) window.location.href = "login.html";
     });
   </script>

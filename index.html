@@ -163,6 +163,18 @@
       from { transform: translateX(0); }
       to { transform: translateX(-100%); }
     }
+    #blocProgramme{
+      background:white;
+      border-radius:10px;
+      padding:15px 20px;
+      width:300px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.1);
+      font-size:18px;
+    }
+
+    #programme{
+      color:#333;
+    }
   </style>
 </head>
 
@@ -187,7 +199,7 @@
     </div>
 
     <div class="pub pub-droite">
-      <img src="ad1.png" alt="Publicité" style="max-width:100%;">
+      <img src="ad2.png" alt="Publicité" style="max-width:100%;">
     </div>
 
     <section class="card">
@@ -200,11 +212,19 @@
       <audio controls>
         <source src="https://uk22freenew.listen2myradio.com/live.mp3?typeportmount=s1_4292_stream_853705832" type="audio/mpeg">
       </audio>
+      <div id="blocProgramme">
+        <b>En ce moment :</b>
+        <span id="programme1">Chargement...</span>
+      </div>
 
       <h3>IRadio en direct</h3>
       <audio controls>
         <source src="https://uk22freenew.listen2myradio.com/live.mp3?typeportmount=ice_19482_stream_255980060" type="audio/mpeg">
       </audio>
+      <div id="blocProgramme">
+        <b>En ce moment :</b>
+        <span id="programme2">Chargement...</span>
+      </div>
     </section>
   </main>
 
@@ -221,6 +241,26 @@
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
+
+    function chargerProgramme(){
+
+      fetch("programme1.txt")
+      .then(r => r.text())
+      .then(text => {
+        document.getElementById("programme1").textContent = text;
+      });
+
+      fetch("programme2.txt")
+      .then(r => r.text())
+      .then(text => {
+        document.getElementById("programme2").textContent = text;
+      });
+
+    }
+
+    chargerProgramme();
+
+    setInterval(chargerProgramme,10000);
   </script>
 
 </body>

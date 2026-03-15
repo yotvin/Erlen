@@ -154,5 +154,24 @@
       © 2026 Erlen <br>
       <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Mode sombre</button>
     </footer>
+
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+      }
+
+      function chargerProgramme(){
+
+        fetch("programme1.txt")
+        .then(r => r.text())
+        .then(text => {
+          document.getElementById("programme1").textContent = text;
+        });
+      }
+
+      chargerProgramme();
+
+      setInterval(chargerProgramme,10000);
+    </script>
   </body>
 </html>

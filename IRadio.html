@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <title>Oslo en direct - Erlen</title>
+    <style>
+    :root {
+      --bg: #f4f4f4;
+      --card: #ffffff;
+      --text: #222;
+      --muted: #666;
+      --accent: #111;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #f1f1f1;
+      --muted: #aaa;
+      --accent: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    .pub {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 160px;
+      height: 500px;
+      background: #ddd;
+      border: 3px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .pub-gauche { left: 20px; }
+    .pub-droite { right: 20px; }
+
+    @media (max-width: 1200px) {
+      .pub { display: none; }
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: background 0.3s ease;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    h3 {
+      margin-top: 2rem;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+    }
+
+    .dark-toggle {
+      margin-top: 1rem;
+      cursor: pointer;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--muted);
+      background: transparent;
+      color: var(--text);
+    }
+
+    #blocProgramme{
+      background:white;
+      border-radius:10px;
+      padding:15px 20px;
+      width:400px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.1);
+      font-size:18px;
+    }
+
+    #programme{
+      color:#333;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>IRadio en direct</h1>
+    </header>
+
+    <main>
+      <div class="pub pub-gauche">
+        <img src="ad3.png" alt="Publicité" onclick="window.location.href='https://devffin.github.io/rdir?type=pub&pubnb=3'" style="max-width:100%;">
+      </div>
+
+      <div class="pub pub-droite">
+        <img src="ad2.png" alt="Publicité" onclick="window.location.href='https://devffin.github.io/rdir?type=pub&pubnb=2'" style="max-width:100%;">
+      </div>
+
+      <section class="card">
+        <h2>IRadio Web</h2>
+        <audio controls>
+          <source src="https://uk22freenew.listen2myradio.com/live.mp3?typeportmount=ice_19482_stream_255980060" type="audio/mpeg">
+        </audio>
+        <div id="blocProgramme">
+          <b>En ce moment :</b>
+          <span id="programme2">Chargement...</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 Erlen <br>
+      <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Mode sombre</button>
+    </footer>
+
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+      }
+
+      function chargerProgramme(){
+
+        fetch("programme2.txt")
+        .then(r => r.text())
+        .then(text => {
+          document.getElementById("programme2").textContent = text;
+        });
+      }
+
+      chargerProgramme();
+
+      setInterval(chargerProgramme,10000);
+    </script>
+  </body>
+</html>
